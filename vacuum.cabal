@@ -1,5 +1,5 @@
 name:               vacuum
-version:            1.0.0.1
+version:            2.0.0.0
 cabal-version:      >= 1.6
 build-type:         Simple
 license:            LGPL
@@ -8,10 +8,10 @@ category:           Debug, GHC
 author:             Matt Morrow
 copyright:          (c) Matt Morrow 2009
 -- Maintained through https://github.com/haskell-pkg-janitors. Join us!
-maintainer:         Conrad Parker <conrad@metadecks.org>
+maintainer:         Austin Seipp <as@hacks.yi.org>
 homepage:           http://web.archive.org/web/20100410115820/http://moonpatio.com/vacuum/
 stability:          experimental
-synopsis:           Extract graph representations of ghc heap values.
+synopsis:           Extract graph representations of values on the GHC heap.
 description:        <http://web.archive.org/web/20100410115820/http://moonpatio.com/vacuum/>
 
 library
@@ -19,8 +19,11 @@ library
   ghc-options:      -funbox-strict-fields
   extensions:       CPP, BangPatterns
   includes:         ghcautoconf.h
-  build-depends:    base==4.*, ghc-prim, array,
-                    containers, pretty
+  build-depends:    ghc-prim,
+                    base        >= 3   && <= 4,
+                    array       >= 0.3 && <= 0.4,
+                    containers  >= 0.4 && <= 0.5,
+                    graphviz    == 2999.12.*
                     -- haskell-src-meta
 
   exposed-modules:  GHC.Vacuum,

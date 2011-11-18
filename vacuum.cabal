@@ -14,16 +14,19 @@ stability:          experimental
 synopsis:           Extract graph representations of values on the GHC heap.
 description:        <http://web.archive.org/web/20100410115820/http://moonpatio.com/vacuum/>
 
+source-repository head
+  type: git
+  location: git://github.com/haskell-pkg-janitors/vacuum.git
+
 library
   hs-source-dirs:   src
   ghc-options:      -funbox-strict-fields
   extensions:       CPP, BangPatterns
   includes:         ghcautoconf.h
   build-depends:    ghc-prim,
-                    base        >= 3   && <= 4,
+                    base        >  3   && < 5,
                     array       >= 0.3 && <= 0.4,
                     containers  >= 0.4 && <= 0.5,
-                    graphviz    == 2999.12.*
                     -- haskell-src-meta
 
   exposed-modules:  GHC.Vacuum,
@@ -32,12 +35,4 @@ library
                     GHC.Vacuum.Q,
                     GHC.Vacuum.Types,
                     GHC.Vacuum.Util,
-                    GHC.Vacuum.Pretty,
-                    GHC.Vacuum.Pretty.Dot
-
-------------------------------------------------------------------------
--- Git repo
---
-source-repository head
-  type: git
-  location: git://github.com/haskell-pkg-janitors/vacuum.git
+                    GHC.Vacuum.Pretty

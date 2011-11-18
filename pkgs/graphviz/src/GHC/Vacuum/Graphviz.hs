@@ -1,21 +1,22 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ViewPatterns #-}
 
 {- |
-> import GHC.Vacuum.Pretty.Dot
+> import GHC.Vacuum.GraphViz
 > import Data.GraphViz.Commands
-> graphToDotPng :: FilePath -> [(String,[String])] -> IO FilePath
+> graphToDotPng :: FilePath -> IntMap HNode -> IO FilePath
 > graphToDotPng fpre g = addExtension (runGraphviz (graphToDot g)) Png fpre
 -}
-module GHC.Vacuum.Pretty.Dot (
-   graphToDot
-  ,graphToDotParams
-  ,vacuumParams
-) where
+module GHC.Vacuum.GraphViz
+       ( graphToDot
+       , graphToDotParams
+       , vacuumParams
+       ) where
+import System.FilePath
 
 import Data.GraphViz hiding (graphToDot)
 import Data.GraphViz.Attributes.Complete( Attribute(RankDir, Splines, FontName)
                                         , RankDir(FromLeft), EdgeType(SplineEdges))
-
 import Control.Arrow(second)
 
 ------------------------------------------------

@@ -34,16 +34,4 @@ library
                     GHC.Vacuum.Q,
                     GHC.Vacuum.Types,
                     GHC.Vacuum.Util,
-<<<<<<< HEAD
                     GHC.Vacuum.Pretty
-=======
-                    GHC.Vacuum.Pretty,
-                    GHC.Vacuum.Pretty.Dot
-
-------------------------------------------------------------------------
--- Git repo
---
-source-repository head
-  type: git
-  location: git://github.com/haskell-pkg-janitors/vacuum.git
->>>>>>> 4bcf75737b667bd10ccc7ebf9de447473d0bda76

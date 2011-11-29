@@ -7,7 +7,6 @@ license-file:       LICENSE
 category:           Debug, GHC
 author:             Matt Morrow
 copyright:          (c) Matt Morrow 2009
--- Maintained through https://github.com/haskell-pkg-janitors. Join us!
 maintainer:         Austin Seipp <as@hacks.yi.org>
 homepage:           http://web.archive.org/web/20100410115820/http://moonpatio.com/vacuum/
 stability:          experimental
@@ -35,4 +34,16 @@ library
                     GHC.Vacuum.Q,
                     GHC.Vacuum.Types,
                     GHC.Vacuum.Util,
+<<<<<<< HEAD
                     GHC.Vacuum.Pretty
+=======
+                    GHC.Vacuum.Pretty,
+                    GHC.Vacuum.Pretty.Dot
+
+------------------------------------------------------------------------
+-- Git repo
+--
+source-repository head
+  type: git
+  location: git://github.com/haskell-pkg-janitors/vacuum.git
+>>>>>>> 4bcf75737b667bd10ccc7ebf9de447473d0bda76

@@ -1,37 +1,57 @@
 name:               vacuum
 version:            2.0.0.0
-cabal-version:      >= 1.6
-build-type:         Simple
+synopsis:           Graph representations of GHC heap values
+description:
+  Vacuum is a library for extracting graph representations of values
+  from the GHC Heap at runtime. Those graphs may then be further
+  processed or translated to various representations for visualization --
+  like Graphviz, or Ubigraph.
+  .
+  By itself this library is not of much use to most users, unless you
+  want to use the raw graph data to visualize the heap in some (new)
+  way. Most people will want to translate the graph representation to
+  something like GraphViz format, which can then be rendered to a
+  pretty PNG or SVG file for viewing. See the `vacuum-graphviz`
+  package for more.
+homepage:           http://thoughtpolice.github.com/vacuum
+bug-reports:        http://github.com/thoughtpolice/vacuum/issues
 license:            LGPL
-license-file:       LICENSE
-category:           Debug, GHC
+license-file:       LICENSE.txt
 author:             Matt Morrow
-copyright:          (c) Matt Morrow 2009
+copyright:          Copyright (c) Matt Morrow 2009, (c) Austin Seipp 2011
 maintainer:         Austin Seipp <as@hacks.yi.org>
-homepage:           http://web.archive.org/web/20100410115820/http://moonpatio.com/vacuum/
+category:           Debug, GHC
 stability:          experimental
-synopsis:           Extract graph representations of values on the GHC heap.
-description:        <http://web.archive.org/web/20100410115820/http://moonpatio.com/vacuum/>
+build-type:         Simple
+cabal-version:      >= 1.6
+tested-with:        GHC == 7.2.1
+
+extra-source-files:
+  AUTHORS.txt
+  README.md
 
 source-repository head
   type: git
-  location: git://github.com/haskell-pkg-janitors/vacuum.git
+  location: git://github.com/thoughtpolice/vacuum.git
 
 library
+  exposed-modules:  
+    GHC.Vacuum,
+    GHC.Vacuum.ClosureType,
+    GHC.Vacuum.Internal,
+    GHC.Vacuum.Q,
+    GHC.Vacuum.Types,
+    GHC.Vacuum.Util,
+    GHC.Vacuum.Pretty
+
+  build-depends:    
+    ghc-prim,
+    base            >  3   && < 5,
+    array           >= 0.3 && <= 0.4,
+    containers      >= 0.4 && <= 0.5,
+ -- haskell-src-meta
+
   hs-source-dirs:   src
-  ghc-options:      -funbox-strict-fields
+  ghc-options:      -funbox-strict-fields -O2
   extensions:       CPP, BangPatterns
   includes:         ghcautoconf.h
-  build-depends:    ghc-prim,
-                    base        >  3   && < 5,
-                    array       >= 0.3 && <= 0.4,
-                    containers  >= 0.4 && <= 0.5,
-                    -- haskell-src-meta
-
-  exposed-modules:  GHC.Vacuum,
-                    GHC.Vacuum.ClosureType,
-                    GHC.Vacuum.Internal,
-                    GHC.Vacuum.Q,
-                    GHC.Vacuum.Types,
-                    GHC.Vacuum.Util,
-                    GHC.Vacuum.Pretty

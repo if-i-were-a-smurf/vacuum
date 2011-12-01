@@ -1,9 +1,9 @@
 name:               vacuum
 version:            2.0.0.0
-synopsis:           Graph representations of GHC heap values
+synopsis:           Graph representation of GHC heap values
 description:
   Vacuum is a library for extracting graph representations of values
-  from the GHC Heap at runtime. Those graphs may then be further
+  from the GHC heap at runtime. Those graphs may then be further
   processed or translated to various representations for visualization --
   like Graphviz, or Ubigraph.
   .
@@ -52,6 +52,6 @@ library
  -- haskell-src-meta
 
   hs-source-dirs:   src
-  ghc-options:      -funbox-strict-fields -O2
+  ghc-options:      -funbox-strict-fields
   extensions:       CPP, BangPatterns
   includes:         ghcautoconf.h

@@ -1,6 +1,5 @@
 module GHC.Vacuum.Pretty (
    module GHC.Vacuum.Pretty
-  ,module GHC.Vacuum.Pretty.Dot
 ) where
 
 import Data.List
@@ -12,7 +11,6 @@ import Control.Monad
 
 import GHC.Vacuum.Util
 import GHC.Vacuum.Types
-import GHC.Vacuum.Pretty.Dot
 
 -----------------------------------------------------------------------------
 

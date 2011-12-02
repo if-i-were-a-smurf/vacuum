@@ -1,12 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ViewPatterns #-}
 
-{- |
-> import GHC.Vacuum.GraphViz
-> import Data.GraphViz.Commands
-> graphToDotPng :: FilePath -> IntMap HNode -> IO FilePath
-> graphToDotPng fpre g = addExtension (runGraphviz (graphToDot g)) Png fpre
--}
 module GHC.Vacuum.GraphViz
        ( -- * Simple API
          vacuumToPng

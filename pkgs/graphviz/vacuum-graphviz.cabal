@@ -17,3 +17,4 @@ Library
                      graphviz == 2999.12.*
 
   exposed-modules:   GHC.Vacuum.GraphViz
+  ghc-options:       -Wall

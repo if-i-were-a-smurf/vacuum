@@ -8,7 +8,13 @@
 > graphToDotPng fpre g = addExtension (runGraphviz (graphToDot g)) Png fpre
 -}
 module GHC.Vacuum.GraphViz
-       ( graphToDot
+       ( -- * Simple API
+         vacuumToPng
+       , vacuumToSvg
+         -- * Lower level API allowing more output control
+       , graphToDotFile
+       , graphToDot
+         -- * GraphViz attributes
        , graphToDotParams
        , vacuumParams
        ) where
@@ -17,9 +23,24 @@ import System.FilePath
 import Data.GraphViz hiding (graphToDot)
 import Data.GraphViz.Attributes.Complete( Attribute(RankDir, Splines, FontName)
                                         , RankDir(FromLeft), EdgeType(SplineEdges))
+import Data.GraphViz.Printing
 import Control.Arrow(second)
 
+import GHC.Vacuum
+
 ------------------------------------------------
+
+vacuumToPng :: FilePath -> a -> IO FilePath
+vacuumToPng fp a = graphToDotFile fp Png $ nameGraph (vacuum a)
+
+vacuumToSvg :: FilePath -> a -> IO FilePath
+vacuumToSvg fp a = graphToDotFile fp Svg $ nameGraph (vacuum a)
+
+
+------------------------------------------------
+
+graphToDotFile :: (Ord a, PrintDot a) => FilePath -> GraphvizOutput -> [(a, [a])] -> IO FilePath
+graphToDotFile fpre outTy g = Data.GraphViz.addExtension (runGraphviz (graphToDot g)) outTy fpre
 
 graphToDot :: (Ord a) => [(a, [a])] -> DotGraph a
 graphToDot = graphToDotParams vacuumParams

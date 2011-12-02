@@ -4,11 +4,13 @@ module GHC.Vacuum.GraphViz
        ( -- * Simple API
          vacuumToPng
        , vacuumToSvg
+         
          -- * Lower level API allowing more output control
        , graphToDotFile
        , graphToDot
-         -- * GraphViz attributes
        , graphToDotParams
+         
+         -- * GraphViz attributes
        , vacuumParams
        ) where
 import System.FilePath

@@ -12,6 +12,7 @@ Cabal-version:       >=1.2
 Library
   hs-source-dirs:    src
   build-depends:     base     > 3 && < 5,
+                     filepath > 1 && < 2,
                      vacuum   == 2.0.0.0,
                      graphviz == 2999.12.*
 

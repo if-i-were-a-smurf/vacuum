@@ -3,3 +3,4 @@
 *.o
 /dist
 /cabal-dev
+/pkgs/*/dist

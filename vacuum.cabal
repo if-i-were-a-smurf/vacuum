@@ -17,8 +17,9 @@ homepage:           http://thoughtpolice.github.com/vacuum
 bug-reports:        http://github.com/thoughtpolice/vacuum/issues
 license:            LGPL
 license-file:       LICENSE.txt
+copyright:          Copyright (c) Matt Morrow  2009,
+                              (c) Austin Seipp 2011
 author:             Matt Morrow
-copyright:          Copyright (c) Matt Morrow 2009, (c) Austin Seipp 2011
 maintainer:         Austin Seipp <as@hacks.yi.org>
 category:           Debug, GHC
 stability:          experimental

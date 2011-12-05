@@ -1,15 +1,16 @@
-Name:                vacuum-graphviz
-Version:             2.0.0.0
-Synopsis:            A library for transforming Vacuum heap graphs into GraphViz output
-License:             LGPL-3
-License-file:        LICENSE
-Author:              Austin Seipp, Ivan Miljenovic
-Maintainer:          Austin Seipp <as@hacks.yi.org>
-Category:            Debug, GHC
-Build-type:          Simple
-Cabal-version:       >=1.2
+name:                vacuum-graphviz
+version:             2.0.0.0
+synopsis:            A library for transforming Vacuum heap graphs into GraphViz output
+license:             LGPL-3
+license-file:        LICENSE
+copyright:           Copyright (c) Austin Seipp 2011
+author:              Austin Seipp, Ivan Miljenovic
+maintainer:          Austin Seipp <as@hacks.yi.org>
+category:            Debug, GHC
+build-type:          Simple
+cabal-version:       >=1.2
 
-Library
+library
   hs-source-dirs:    src
   build-depends:     base     > 3 && < 5,
                      filepath > 1 && < 2,

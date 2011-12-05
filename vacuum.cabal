@@ -15,7 +15,7 @@ description:
   package for more.
 homepage:           http://thoughtpolice.github.com/vacuum
 bug-reports:        http://github.com/thoughtpolice/vacuum/issues
-license:            LGPL
+license:            LGPL-3
 license-file:       LICENSE.txt
 copyright:          Copyright (c) Matt Morrow  2009,
                               (c) Austin Seipp 2011

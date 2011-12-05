@@ -1,4 +1,15 @@
 {-# LANGUAGE BangPatterns, UnboxedTuples, MagicHash #-}
+-- |
+-- Module      : GHC.Vacuum
+-- Copyright   : (c) Matt Morrow 2009, Austin Seipp 2011
+-- License     : LGPLv3
+-- 
+-- Maintainer  : as@hacks.yi.org
+-- Stability   : experimental
+-- Portability : non-portable (GHC only)
+-- 
+-- 
+-- 
 module GHC.Vacuum (
    HNodeId
   ,HNode(..)

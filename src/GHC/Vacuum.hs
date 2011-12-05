@@ -8,7 +8,26 @@
 -- Stability   : experimental
 -- Portability : non-portable (GHC only)
 -- 
+-- @vacuum@ is a library that allows you to look at the graph
+-- representation of an arbitrary value or expression.
 -- 
+-- Evaluation in Haskell proceeds by /graph reduction/, where values
+-- on the GHC heap are represented in a graph structure, and where
+-- nodes in the graph represent things like constructors or regular
+-- values. With this library, you can extract the graph representation
+-- of said heap values, and display them in meaningful ways to observe
+-- properties like sharing, or a birds eye view of how much memory
+-- you're using.
+-- 
+-- By itself, this module and package is not very useful to
+-- the end user - it is meant to be consumed by those who
+-- would want to visualise the abstract graph output in some
+-- meaningful way, using graphviz or ubigraph, for example.
+-- 
+-- If you are an end user who wants to visualize their data
+-- structures and nothing more, please look at the @vacuum-graphviz@
+-- package, which exports convenient APIs for rendering the output
+-- graphs into pretty PNG/SVG files.
 -- 
 module GHC.Vacuum (
    HNodeId
@@ -33,7 +52,6 @@ module GHC.Vacuum (
   ,nodePkg,nodeMod
   ,nodeName,itabName
   ,HValue
-  --,module GHC.Vacuum.Q
 ) where
 
 import GHC.Vacuum.Q

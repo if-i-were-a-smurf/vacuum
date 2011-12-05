@@ -1,9 +1,35 @@
 {-# LANGUAGE OverloadedStrings #-}
-
+-- |
+-- Module      : GHC.Vacuum.GraphViz
+-- Copyright   : (c) Austin Seipp 2011
+-- License     : LGPLv3
+-- 
+-- Maintainer  : as@hacks.yi.org
+-- Stability   : experimental
+-- Portability : non-portable (GHC only)
+-- 
+-- This module exports a simple, high level interface for exporting
+-- @vacuum@ graphs to GraphViz @dot@ output, and rendering them to
+-- PNG/SVG files. It also contains various helpers if you wish to
+-- customize the output yourself in some manner.
+-- 
+-- For this module to work, you will need to have graphviz installed,
+-- and the 'dot' utility should be available somewhere in your
+-- @$PATH@.
+-- 
+-- The simplest possible usage of this module is like so:
+-- 
+-- > vacuumToPng "list" [1..10]
+-- 
+-- This will output a \'list.png\' file, which contains a pretty graph
+-- visualization of the expression @[1..10]@. You may alternatively
+-- use 'vacuumToSvg' in the same manner, to export a graph to an SVG
+-- file. This is more than sufficient for many use cases.
+-- 
 module GHC.Vacuum.GraphViz
        ( -- * Simple API
-         vacuumToPng
-       , vacuumToSvg
+         vacuumToPng           -- :: FilePath -> a -> IO FilePath
+       , vacuumToSvg           -- :: FilePath -> a -> IO FilePath
          
          -- * Lower level API allowing more output control
        , graphToDotFile
@@ -25,9 +51,15 @@ import GHC.Vacuum
 
 ------------------------------------------------
 
+-- | @vacuumToPng "foo" e@ renders a graph representation of the
+-- expression @e@ (which can be any expression what-so-ever) to
+-- the file \"foo.png\" for later viewing.
 vacuumToPng :: FilePath -> a -> IO FilePath
 vacuumToPng fp a = graphToDotFile fp Png $ nameGraph (vacuum a)
 
+-- | @vacuumToSvg "foo" e@ renders a graph representation of the
+-- expression @e@ (which can be any expression what-so-ever) to
+-- the file \"foo.svg\" for later viewing.
 vacuumToSvg :: FilePath -> a -> IO FilePath
 vacuumToSvg fp a = graphToDotFile fp Svg $ nameGraph (vacuum a)
 

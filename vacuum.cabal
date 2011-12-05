@@ -11,7 +11,7 @@ description:
   want to use the raw graph data to visualize the heap in some (new)
   way. Most people will want to translate the graph representation to
   something like GraphViz format, which can then be rendered to a
-  pretty PNG or SVG file for viewing. See the `vacuum-graphviz`
+  pretty PNG or SVG file for viewing. See the @vacuum-graphviz@
   package for more.
 homepage:           http://thoughtpolice.github.com/vacuum
 bug-reports:        http://github.com/thoughtpolice/vacuum/issues

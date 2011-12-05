@@ -1,8 +1,10 @@
 name:                vacuum-graphviz
 version:             2.0.0.0
-synopsis:            A library for transforming Vacuum heap graphs into GraphViz output
+synopsis:            A library for transforming vacuum graphs into GraphViz output
+description:
+  A library for transforming @vacuum@ graphs into GraphViz output
 license:             LGPL-3
-license-file:        LICENSE
+license-file:        LICENSE.txt
 copyright:           Copyright (c) Austin Seipp 2011
 author:              Austin Seipp, Ivan Miljenovic
 maintainer:          Austin Seipp <as@hacks.yi.org>

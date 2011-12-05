@@ -37,7 +37,6 @@ module GHC.Vacuum (
 ) where
 
 import GHC.Vacuum.Q
-import GHC.Vacuum.Util
 import GHC.Vacuum.Types
 import GHC.Vacuum.Pretty
 import GHC.Vacuum.ClosureType

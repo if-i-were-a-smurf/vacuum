@@ -37,12 +37,11 @@ source-repository head
 
 library
   exposed-modules:  
-    GHC.Vacuum,
-    GHC.Vacuum.ClosureType,
-    GHC.Vacuum.Internal,
-    GHC.Vacuum.Q,
-    GHC.Vacuum.Types,
-    GHC.Vacuum.Util,
+    GHC.Vacuum
+    GHC.Vacuum.ClosureType
+    GHC.Vacuum.Internal
+    GHC.Vacuum.Q
+    GHC.Vacuum.Types
     GHC.Vacuum.Pretty
 
   build-depends:    

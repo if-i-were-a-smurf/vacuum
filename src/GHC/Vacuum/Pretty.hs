@@ -12,21 +12,20 @@
 module GHC.Vacuum.Pretty (
    module GHC.Vacuum.Pretty
 ) where
+import Control.Arrow (second)
 
 import Data.List
-import Data.IntMap(IntMap)
-import Data.Monoid(Monoid(..))
+import Data.IntMap (IntMap)
+import Data.Monoid (Monoid(..))
 import qualified Data.IntMap as IM
---import Language.Haskell.Meta.Utils(pretty)
-import Control.Monad
 
-import GHC.Vacuum.Util
+import Control.Monad
 import GHC.Vacuum.Types
 
 -----------------------------------------------------------------------------
 
 toAdjPair :: (HNodeId, HNode) -> (Int, [Int])
-toAdjPair = mapsnd nodePtrs
+toAdjPair = second nodePtrs
 
 toAdjList :: IntMap HNode -> [(Int, [Int])]
 toAdjList = fmap toAdjPair . IM.toList

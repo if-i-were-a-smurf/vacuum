@@ -41,8 +41,13 @@ library
     GHC.Vacuum.ClosureType
     GHC.Vacuum.Internal
     GHC.Vacuum.Q
-    GHC.Vacuum.Types
     GHC.Vacuum.Pretty
+    GHC.Vacuum.Types
+
+  if impl(ghc == 7.0.*)
+    exposed-modules:  GHC.Vacuum.ClosureType.V700
+  if impl(ghc == 7.2.*)
+    exposed-modules:  GHC.Vacuum.ClosureType.V702
 
   build-depends:    
     ghc-prim,

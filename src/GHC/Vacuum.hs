@@ -156,8 +156,7 @@ getClosure_ a =
               -- follow indirections, because mkStableName follows
               -- indirections as well.
               OtherInfo { itabType = tipe }
-                  | tipe == IND || tipe == IND_OLDGEN || tipe == IND_PERM ||
-                    tipe == IND_OLDGEN_PERM || tipe == IND_STATIC ->
+                  | tipe == IND || tipe == IND_PERM || tipe == IND_STATIC ->
                   case ptrs0 of
                       (dest : _) -> getClosure_ dest
               _ -> return (Closure ptrs0 lits itab)

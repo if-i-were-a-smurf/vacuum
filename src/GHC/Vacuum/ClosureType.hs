@@ -24,13 +24,15 @@ module GHC.Vacuum.ClosureType
 -- Import the correct ClosureType datatype based on
 -- the version
 
-#if __GLASGOW_HASKELL__ == 702
-import GHC.Vacuum.ClosureType.V702 (ClosureType(..))
-#elif __GLASGOW_HASKELL__ == 700
+#if __GLASGOW_HASKELL__   == 700
 import GHC.Vacuum.ClosureType.V700 (ClosureType(..))
+#elif __GLASGOW_HASKELL__ == 702
+import GHC.Vacuum.ClosureType.V702 (ClosureType(..))
+#elif __GLASGOW_HASKELL__ == 704
+import GHC.Vacuum.ClosureType.V704 (ClosureType(..))
 #else
 #error Unsupported GHC version in ClosureTypes.hs!
-#endif 
+#endif
 
 ------------------------------------------------
 

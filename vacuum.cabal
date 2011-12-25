@@ -48,6 +48,8 @@ library
     exposed-modules:  GHC.Vacuum.ClosureType.V700
   if impl(ghc == 7.2.*)
     exposed-modules:  GHC.Vacuum.ClosureType.V702
+  if impl(ghc == 7.4.*)
+    exposed-modules:  GHC.Vacuum.ClosureType.V704
   else
     buildable: False
 

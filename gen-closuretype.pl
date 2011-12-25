@@ -1,8 +1,7 @@
 #!/usr/bin/env perl
-use feature 'say';
+use feature 'say', 'switch';
 use warnings;
 use strict;
-use Switch;
 
 # -- Auxiliary functions -----------
 
@@ -12,18 +11,12 @@ sub strip_per_version {
     my @data  = @_;
     my @res;
 
-    switch ($hcver) {
-	case m/7\.0\.*/i { 
+    given ($hcver) {
+	when(/7\.[0-4]{1}\.*/) { 
 	    @res = grep(/#define/, @data);
 	    @res = grep(!/#define RTS_STORAGE_CLOSURETYPES_H/, @res);
 	}
-	case m/7\.2\.*/i {
-	    @res = grep(/\#define/, @data);
-	    @res = grep(!/\#define RTS_STORAGE_CLOSURETYPES_H/, @res);
-	}
-	else { 
-	    die "GHC version unsupported!"
-	}
+	default { die "strip version: GHC version unsupported!" }
     }
 
     #
@@ -47,16 +40,14 @@ sub output_hs {
     my @verdots = split(/./, $ver);
     
     my $modname;
-    switch ($ver) {
-	case m/7\.2\.*/i { $modname = "V702"; } 
-	case m/7\.0\.*/i { $modname = "V700"; } 
-	else { die "GHC version unsupported!"; } 
+    given($ver) {
+	when(/7\.([0-4]{1})\.*/) { $modname = "V70$1"; } 
+	default { die "output_hs: GHC version unsupported!"; } 
     }
     my $modprefix = <<END;
 module GHC.Vacuum.ClosureType.$modname ( ClosureType(..) ) where
 
 END
-
 
     my $datadecl = "data ClosureType\n  ";
     my $instancetop = "instance Enum ClosureType where";

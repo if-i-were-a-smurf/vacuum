@@ -48,12 +48,14 @@ library
     exposed-modules:  GHC.Vacuum.ClosureType.V700
   if impl(ghc == 7.2.*)
     exposed-modules:  GHC.Vacuum.ClosureType.V702
+  else
+    buildable: False
 
   build-depends:    
     ghc-prim,
-    base            >  3   && < 5,
-    array           >= 0.3 && <= 0.4,
-    containers      >= 0.4 && <= 0.5
+    base            >  3 && < 5,
+    array           >= 0.3,
+    containers      >= 0.4
  -- haskell-src-meta
 
   hs-source-dirs:   src

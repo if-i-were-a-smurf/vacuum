@@ -12,11 +12,11 @@ sub strip_per_version {
     my @res;
 
     given ($hcver) {
-	when(/7\.[0-4]{1}\.*/) { 
-	    @res = grep(/#define/, @data);
-	    @res = grep(!/#define RTS_STORAGE_CLOSURETYPES_H/, @res);
-	}
-	default { die "strip version: GHC version unsupported!" }
+        when(/7\.[0-4]{1}\.*/) { 
+            @res = grep(/#define/, @data);
+            @res = grep(!/#define RTS_STORAGE_CLOSURETYPES_H/, @res);
+        }
+        default { die "strip version: GHC version unsupported!" }
     }
 
     #
@@ -41,8 +41,8 @@ sub output_hs {
     
     my $modname;
     given($ver) {
-	when(/7\.([0-4]{1})\.*/) { $modname = "V70$1"; } 
-	default { die "output_hs: GHC version unsupported!"; } 
+        when(/7\.([0-4]{1})\.*/) { $modname = "V70$1"; } 
+        default { die "output_hs: GHC version unsupported!"; } 
     }
     my $modprefix = <<END;
 module GHC.Vacuum.ClosureType.$modname ( ClosureType(..) ) where

@@ -7,7 +7,7 @@ license:             LGPL-3
 license-file:        LICENSE.txt
 copyright:           Copyright (c) Austin Seipp 2011
 author:              Austin Seipp, Ivan Miljenovic
-maintainer:          Austin Seipp <as@hacks.yi.org>
+maintainer:          Austin Seipp <mad.one@gmail.com>
 category:            Debug, GHC
 build-type:          Simple
 cabal-version:       >=1.2

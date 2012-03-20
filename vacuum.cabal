@@ -20,7 +20,7 @@ license-file:       LICENSE.txt
 copyright:          Copyright (c) Matt Morrow  2009,
                               (c) Austin Seipp 2011
 author:             Matt Morrow
-maintainer:         Austin Seipp <as@hacks.yi.org>
+maintainer:         Austin Seipp <mad.one@gmail.com>
 category:           Debug, GHC
 stability:          experimental
 build-type:         Simple

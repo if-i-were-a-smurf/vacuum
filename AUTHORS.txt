@@ -2,7 +2,8 @@ Vacuum was originally written in 2009 by Matt Morrow. Matt has since
 disappeared and with it, the original darcs repository holding his
 code and changeset history.
 
-Austin Seipp (as -at- hacks.yi.org) is the current maintainer.
+Austin Seipp (mad.one -at- gmail.com) is the current
+maintainer.
 
 Various people have contributed to vacuum over the years; the
 following list is in no order, and is in no way comprehensive. If

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 -- |
 -- Module      : GHC.Vacuum.GraphViz
--- Copyright   : (c) Austin Seipp 2011
+-- Copyright   : (c) Austin Seipp 2012, Ivan Lazar Miljenovic 2011
 -- License     : LGPLv3
 -- 
 -- Maintainer  : mad.one@gmail.com

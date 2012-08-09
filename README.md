@@ -7,6 +7,8 @@ processed or translated to various representations for visualization
 
 [travis-ci.org](http://travis-ci.org) results: [![Build Status](https://secure.travis-ci.org/thoughtpolice/vacuum.png?branch=master)](http://travis-ci.org/thoughtpolice/vacuum)
 
+[Homepage][main page].
+
 # Installation
 
 It's just a `cabal install` away on [Hackage][]:

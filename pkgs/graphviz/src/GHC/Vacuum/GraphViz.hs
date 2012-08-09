@@ -43,7 +43,6 @@ module GHC.Vacuum.GraphViz
 import Data.GraphViz hiding (graphToDot)
 import Data.GraphViz.Attributes.Complete( Attribute(RankDir, Splines, FontName)
                                         , RankDir(FromLeft), EdgeType(SplineEdges))
-import Data.GraphViz.Printing
 import Control.Arrow(second)
 
 import GHC.Vacuum

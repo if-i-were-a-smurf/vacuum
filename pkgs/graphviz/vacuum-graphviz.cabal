@@ -17,7 +17,7 @@ library
   build-depends:     base     > 3 && < 5,
                      filepath > 1 && < 2,
                      vacuum   == 2.0.0.0,
-                     graphviz == 2999.12.*
+                     graphviz == 2999.13.*
 
   exposed-modules:   GHC.Vacuum.GraphViz
   ghc-options:       -Wall -O2 -fwarn-tabs

@@ -1,6 +1,6 @@
 *~
 *.hi
 *.o
-/dist
+/dist*
 /cabal-dev
 /pkgs/*/dist

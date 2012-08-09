@@ -9,6 +9,8 @@ processed or translated to various representations for visualization
 
 # Installation
 
+It's just a `cabal install` away on [Hackage][]:
+
 ~~~~~~~~
 $ cabal install vacuum
 # also install the graphviz package, for SVG/PNG rendering:
@@ -48,7 +50,6 @@ LGPLv3. See `LICENSE.txt` for details.
 [issue tracker]: http://github.com/thoughtpolice/vacuum/issues
 [gh]: http://github.com/thoughtpolice/vacuum
 [bb]: http://bitbucket.org/thoughtpolice/vacuum
-
-
+[Hackage]: http://hackage.haskell.org/package/pcap-conduit
 
 [e1]: https://raw.github.com/thoughtpolice/vacuum/master/gallery/list.png

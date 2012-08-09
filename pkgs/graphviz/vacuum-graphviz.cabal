@@ -5,8 +5,8 @@ description:
   A library for transforming @vacuum@ graphs into GraphViz output
 license:             LGPL-3
 license-file:        LICENSE.txt
-copyright:           Copyright (c) Austin Seipp 2011
-author:              Austin Seipp, Ivan Miljenovic
+copyright:           Copyright (c) Ivan Miljenovic 2011, Austin Seipp 2012
+author:              Ivan Miljenovic
 maintainer:          Austin Seipp <mad.one@gmail.com>
 category:            Debug, GHC
 build-type:          Simple
@@ -20,4 +20,4 @@ library
                      graphviz == 2999.12.*
 
   exposed-modules:   GHC.Vacuum.GraphViz
-  ghc-options:       -Wall
+  ghc-options:       -Wall -O2 -fwarn-tabs

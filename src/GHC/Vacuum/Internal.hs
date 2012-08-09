@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP, MagicHash, RankNTypes #-}
 -- |
 -- Module      : GHC.Vacuum.Internal
--- Copyright   : (c) Matt Morrow 2009, Austin Seipp 2011
+-- Copyright   : (c) Matt Morrow 2009, Austin Seipp 2011-2012
 -- License     : LGPLv3
 -- 
 -- Maintainer  : mad.one@gmail.com

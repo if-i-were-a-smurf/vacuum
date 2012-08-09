@@ -51,5 +51,4 @@ LGPLv3. See `LICENSE.txt` for details.
 [gh]: http://github.com/thoughtpolice/vacuum
 [bb]: http://bitbucket.org/thoughtpolice/vacuum
 [Hackage]: http://hackage.haskell.org/package/pcap-conduit
-
 [e1]: https://raw.github.com/thoughtpolice/vacuum/master/gallery/list.png

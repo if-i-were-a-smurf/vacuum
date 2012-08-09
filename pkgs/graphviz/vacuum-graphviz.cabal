@@ -10,7 +10,7 @@ author:              Ivan Miljenovic
 maintainer:          Austin Seipp <mad.one@gmail.com>
 category:            Debug, GHC
 build-type:          Simple
-cabal-version:       >=1.2
+cabal-version:       >=1.6
 
 library
   hs-source-dirs:    src

@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 -- |
 -- Module      : GHC.Vacuum.Types
 -- Copyright   : (c) Matt Morrow 2009, Austin Seipp 2011-2012
@@ -17,11 +18,9 @@ module GHC.Vacuum.Types (
 import GHC.Vacuum.ClosureType
 import GHC.Vacuum.Internal(HValue)
 
-import Data.List
 import Data.Word
 import Data.IntMap(IntMap)
 import Data.Monoid(Monoid(..))
-import qualified Data.IntMap as IM
 import System.Mem.StableName
 
 ------------------------------------------------
@@ -49,8 +48,11 @@ nodePkg   = fst3 . itabName . nodeInfo
 nodeMod   = snd3 . itabName . nodeInfo
 nodeName  = trd3 . itabName . nodeInfo
 
+fst3 :: (a, b, c) -> a
 fst3 (x,_,_) = x
+snd3 :: (a, b, c) -> b
 snd3 (_,x,_) = x
+trd3 :: (a, b, c) -> c
 trd3 (_,_,x) = x
 
 itabName :: InfoTab -> (String, String, String)

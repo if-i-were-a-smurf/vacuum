@@ -10,22 +10,33 @@
 -- 
 -- 
 -- 
-module GHC.Vacuum.Q (
-   Ref,ref,(!),(.=),(!=)
-  ,Q,isEmptyQ,newQ,putQ,takeQ,tryTakeQ
-  ,drainQ,getQContents,takeWhileQ
-) where
+module GHC.Vacuum.Q
+       ( Ref
+       , ref
+       , (!)
+       , (.=)
+       , (!=)
 
+       , Q
+       , isEmptyQ
+       , newQ
+       , putQ
+       , takeQ
+       , tryTakeQ
+       , drainQ
+       , getQContents
+       , takeWhileQ
+       ) where
+import Prelude hiding (last)
 import Data.IORef
 import Control.Monad
 import Control.Concurrent
 import Control.Applicative
-import System.IO.Unsafe(unsafeInterleaveIO)
+import System.IO.Unsafe (unsafeInterleaveIO)
 
 ------------------------------------------------
 
-newtype Ref a = Ref
-  {unRef :: IORef a}
+newtype Ref a = Ref (IORef a)
 
 ref :: a -> IO (Ref a)
 ref a = Ref <$> newIORef a
@@ -82,7 +93,7 @@ takeQ q@(Q rd _) = do
                         return a
 
 tryTakeQ :: Q a -> IO (Maybe a)
-tryTakeQ  q@(Q rd _) = do
+tryTakeQ (Q rd _) = do
   o <- tryTakeMVar rd
   case o of
     Nothing -> return Nothing
@@ -99,8 +110,8 @@ drainQ q = do
   a <- tryTakeQ q
   case a of
     Nothing -> return []
-    Just a -> do as <- unsafeInterleaveIO (drainQ q)
-                 return (a:as)
+    Just b -> do as <- unsafeInterleaveIO (drainQ q)
+                 return (b:as)
 
 getQContents :: Q a -> IO [a]
 getQContents q = do

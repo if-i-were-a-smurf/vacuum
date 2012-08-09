@@ -11,11 +11,11 @@ processed or translated to various representations for visualization
 
 It's just a `cabal install` away on [Hackage][]:
 
-~~~~~~~~
+```bash
 $ cabal install vacuum
 # also install the graphviz package, for SVG/PNG rendering:
 $ cabal install vacuum-graphviz
-~~~~~~~~
+```
 
 # Gallery of examples
 
@@ -50,5 +50,5 @@ LGPLv3. See `LICENSE.txt` for details.
 [issue tracker]: http://github.com/thoughtpolice/vacuum/issues
 [gh]: http://github.com/thoughtpolice/vacuum
 [bb]: http://bitbucket.org/thoughtpolice/vacuum
-[Hackage]: http://hackage.haskell.org/package/pcap-conduit
+[Hackage]: http://hackage.haskell.org/package/vacuum
 [e1]: https://raw.github.com/thoughtpolice/vacuum/master/gallery/list.png

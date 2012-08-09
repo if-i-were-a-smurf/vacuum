@@ -8,7 +8,7 @@
 -- Stability   : experimental
 -- Portability : non-portable (GHC only)
 -- 
--- 
+-- Internal vacuum module. You probably shouldn't be here.
 -- 
 module GHC.Vacuum.Internal (
    HValue

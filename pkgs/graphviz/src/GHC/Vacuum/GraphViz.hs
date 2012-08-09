@@ -39,7 +39,6 @@ module GHC.Vacuum.GraphViz
          -- * GraphViz attributes
        , vacuumParams
        ) where
-import System.FilePath
 
 import Data.GraphViz hiding (graphToDot)
 import Data.GraphViz.Attributes.Complete( Attribute(RankDir, Splines, FontName)

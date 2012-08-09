@@ -59,14 +59,14 @@ END
 	my $prefix = ($i == 0) ? "=": "|";
 	$datadecl .= "$prefix $_[$i]\n  ";
 
-	$fromenum .= "  fromEnum $_[$i]\t= $i\n";
-	$toenum   .= "  toEnum $i\t= $_[$i]\n";
+	$fromenum .= "  fromEnum $_[$i] = $i\n";
+	$toenum   .= "  toEnum $i = $_[$i]\n";
 
 	$i++;
     }
 
     $datadecl .= "deriving (Eq, Ord, Show, Read)\n";
-    $toenum   .= "  toEnum n\t= error (\"toEnum: ClosureType: invalid ClosureType: \" ++ show n)\n";
+    $toenum   .= "  toEnum n = error (\"toEnum: ClosureType: invalid ClosureType: \" ++ show n)\n";
 
     # And now output all the things!
     say $modprefix;

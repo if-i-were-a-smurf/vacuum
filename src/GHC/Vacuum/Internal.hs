@@ -21,22 +21,13 @@ module GHC.Vacuum.Internal (
   ,hALF_WORD_SIZE
   ,S(..),get,gets,set,io,modify,runS
 ) where
-
+import Prelude hiding (mod)
 import Data.Char
 import Data.Word
-import Data.List
-import Data.IORef
-import Data.Array.IArray
-import Control.Monad
 import Control.Monad.Fix
 import Foreign
 
 import Data.List
-import Data.Map(Map)
-import Data.Set(Set)
-import qualified Data.Set as S
-import qualified Data.Map as M
-import Data.Monoid(Monoid(..))
 
 import GHC.Prim
 import GHC.Exts
@@ -68,6 +59,7 @@ type WordOff = Int
 type StgWord = Word
 
 -- hmmmmmm. Is there any way to tell this?
+opt_SccProfilingOn :: Bool
 opt_SccProfilingOn = False
 
 -- ghci> wORD_SIZE
@@ -122,7 +114,7 @@ instance Storable StgInfoTable where
 #endif
         ]
 
-   alignment itbl
+   alignment _
       = SIZEOF_VOID_P
 
    poke a0 itbl
@@ -145,24 +137,24 @@ instance Storable StgInfoTable where
 #ifndef GHCI_TABLES_NEXT_TO_CODE
            entry  <- load
 #endif
-           ptrs   <- load
-           nptrs  <- load
-           tipe   <- load
-           srtlen <- load
+           ptrs'   <- load
+           nptrs'  <- load
+           tipe'   <- load
+           srtlen' <- load
 #ifdef GHCI_TABLES_NEXT_TO_CODE
-           code   <- sequence (replicate itblCodeLength load)
+           code'   <- sequence (replicate itblCodeLength load)
 #endif
            return
               StgInfoTable {
 #ifndef GHCI_TABLES_NEXT_TO_CODE
                  entry  = entry,
 #endif
-                 ptrs   = ptrs,
-                 nptrs  = nptrs,
-                 tipe   = tipe,
-                 srtlen = srtlen
+                 ptrs   = ptrs',
+                 nptrs  = nptrs',
+                 tipe   = tipe',
+                 srtlen = srtlen'
 #ifdef GHCI_TABLES_NEXT_TO_CODE
-                ,code   = code
+                ,code   = code'
 #endif
               }
 
@@ -200,7 +192,7 @@ instance MonadFix (S s) where
   mfix f = S (\k s ->
     uncurry k =<< mfix (\ ~(a,_) ->
     -- the lazy pattern is ESSENTIAL, otherwise <<loop>>
-      unS (f a) (\a s -> return (a,s)) s))
+      unS (f a) (\a' s' -> return (a',s')) s))
 get :: S s s
 get = S (\k s -> k s s)
 gets :: (s -> a) -> S s a
@@ -215,8 +207,8 @@ runS :: S s a -> s -> IO (a, s)
 runS (S g) = g (\a -> return . (,) a)
 evalS :: S s a -> s -> IO a
 evalS (S g) = g (\a _ -> return a)
-execS :: S s a -> s -> IO s
-execS (S g) = g (\_ -> return)
+--execS :: S s a -> s -> IO s
+--execS (S g) = g (\_ -> return)
 
 -----------------------------------------------------------------------------
 
@@ -235,6 +227,7 @@ itblCodeLength = length (mkJumpToAddr undefined)
 
 mkJumpToAddr :: Ptr () -> [ItblCode]
 
+ptrToInt :: Ptr a -> Int
 ptrToInt (Ptr a#) = I# (addr2Int# a#)
 
 #if sparc_TARGET_ARCH
@@ -367,6 +360,7 @@ stdInfoTableSizeW
 stdInfoTableSizeB :: ByteOff
 stdInfoTableSizeB = stdInfoTableSizeW * wORD_SIZE
 
+{--
 stdSrtBitmapOffset :: ByteOff
 -- Byte offset of the SRT bitmap half-word which is 
 -- in the *higher-addressed* part of the type_lit
@@ -379,7 +373,7 @@ stdClosureTypeOffset = stdInfoTableSizeB - wORD_SIZE
 stdPtrsOffset, stdNonPtrsOffset :: ByteOff
 stdPtrsOffset    = stdInfoTableSizeB - 2*wORD_SIZE
 stdNonPtrsOffset = stdInfoTableSizeB - 2*wORD_SIZE + hALF_WORD_SIZE
-
+--}
 ------------------------------------------------
 
 -- * This section is taken from Linker.lhs

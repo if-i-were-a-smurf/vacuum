@@ -61,14 +61,9 @@ import GHC.Vacuum.ClosureType
 import GHC.Vacuum.Internal as GHC
 
 import Data.List
-import Data.Char
-import Data.Word
-import Data.Bits
-import Data.Map(Map)
+import Data.Maybe (fromJust, isJust)
 import Data.IntMap(IntMap)
 import qualified Data.IntMap as IM
-import qualified Data.Map as M
-import Data.Monoid(Monoid(..))
 import System.IO.Unsafe
 import Control.Monad
 import Control.Applicative
@@ -76,8 +71,7 @@ import Control.Exception
 import Prelude hiding(catch)
 import Control.Concurrent
 
-import Foreign hiding (unsafePerformIO)
-import GHC.Arr(Array(..))
+import Foreign hiding (unsafePerformIO, void)
 import GHC.Exts
 
 import System.Mem.StableName
@@ -143,22 +137,23 @@ getClosure_ :: a -> IO Closure
 getClosure_ a =
   case unpackClosure# a of
       (# iptr
-        ,ptrs
-        ,nptrs #) -> do
+        ,ptrs'
+        ,nptrs' #) -> do
           let iptr' | ghciTablesNextToCode = Ptr iptr
                     | otherwise = Ptr iptr `plusPtr` negate wORD_SIZE
           itab <- peekInfoTab iptr'
           let elems = fromIntegral (itabPtrs itab)
-              ptrs0 = dumpArray# ptrs 0 elems
-              lits = [W# (indexWordArray# nptrs i)
+              ptrs0 = dumpArray# ptrs' 0 elems
+              lits = [W# (indexWordArray# nptrs' i)
                         | I# i <- [0.. fromIntegral (itabLits itab-1)] ]
           case itab of
               -- follow indirections, because mkStableName follows
               -- indirections as well.
-              OtherInfo { itabType = tipe }
-                  | tipe == IND || tipe == IND_PERM || tipe == IND_STATIC ->
+              OtherInfo { itabType = tipe' }
+                  | tipe' == IND || tipe' == IND_PERM || tipe' == IND_STATIC ->
                   case ptrs0 of
                       (dest : _) -> getClosure_ dest
+                      []         -> error "GHC.Vacuum.getClosure: indirection had 0 pointers!"
               _ -> return (Closure ptrs0 lits itab)
 
 -- using indexArray# makes sure that the HValue is looked up without
@@ -212,12 +207,12 @@ peekInfoTab p = do
 hasName :: StgInfoTable -> Bool
 hasName stg = let ct = (toEnum . fromIntegral . GHC.tipe) stg :: ClosureType
                   lits = (fromIntegral . GHC.nptrs) stg       :: Int
-                  ptrs = (fromIntegral . GHC.ptrs) stg :: Int
+                  ptrs' = (fromIntegral . GHC.ptrs) stg :: Int
               in  isCon ct
-                && lits < 1024  -- It seems the ptrs info the ItblEnv
-                && ptrs < 1024  -- gotten from ByteCodeItbls are borked
-                                -- in some way, *OR* (and more likely)
-                                -- there's some caveat i'm not aware of.
+                && lits < 1024   -- It seems the ptrs info the ItblEnv
+                && ptrs' < 1024  -- gotten from ByteCodeItbls are borked
+                                 -- in some way, *OR* (and more likely)
+                                 -- there's some caveat i'm not aware of.
 
 ------------------------------------------------
 
@@ -242,15 +237,8 @@ debugH m = (seen . snd) <$> runS m emptyEnv
 streamH :: (Q (Maybe a) -> H b) -> IO [a]
 streamH m = do
   q <- newQ
-  tid <- forkIO (runH_ (m q) `finally` putQ q Nothing)
+  void $ forkIO (runH_ (m q) `finally` putQ q Nothing)
   fmap fromJust <$> takeWhileQ isJust q
-
-fromJust :: Maybe a -> a
-fromJust (Just a) = a
-
-isJust :: Maybe a -> Bool
-isJust (Just{}) = True
-isJust  _       = False
 
 ------------------------------------------------
 
@@ -259,8 +247,8 @@ isJust  _       = False
 vacuumH :: (HValue -> H [HNodeId]) -> a -> H ()
 vacuumH scan a = go =<< rootH a
   where go :: HValue -> H ()
-        go a = do
-          ids <- scan a
+        go x = do
+          ids <- scan x
           case ids of
             [] -> return ()
             _  -> mapM_ go =<< mapM getHVal ids
@@ -281,11 +269,11 @@ dumpToH n _ | n < 1 = return ()
 dumpToH n a = go (n-1) =<< rootH a
   where go :: Int -> HValue -> H ()
         go 0 _ = return ()
-        go n a = do
-          ids <- nodeH a
+        go m x = do
+          ids <- nodeH x
           case ids of
             [] -> return ()
-            _  -> mapM_ (go (n-1)) =<< mapM getHVal ids
+            _  -> mapM_ (go (m-1)) =<< mapM getHVal ids
 
 -- | Turn the root into an @HValue@ to start off.
 rootH :: a -> H HValue
@@ -299,9 +287,9 @@ scanNodeH :: (HValue -> H (HNodeId,Closure,[HValue]))
           -> (HValue -> H (HNodeId, Bool))
           -> (HNodeId -> HNode -> H ())
           ->  HValue  -> H [HNodeId]
-scanNodeH getNode getId withNode a = do
-  (i,clos,ptrs) <- getNode a
-  xs <- mapM getId ptrs
+scanNodeH getNode getID withNode a = do
+  (i,clos,ptrs') <- getNode a
+  xs <- mapM getID ptrs'
   let news = (fmap fst . fst . partition snd) xs
       n    = HNode (fmap fst xs)
                     (closLits clos)
@@ -324,23 +312,23 @@ getNodeH a = do
   clos <- io (getClosure a)
   (i, _) <- getId a
   let itab = closITab clos
-      ptrs = closPtrs clos
+      ptrs' = closPtrs clos
   case itabType itab of
     t   -- IMPORTANT: Following any of the pointer(s)
         -- inside a @THUNK@ results in the chop (aka segfault).
       | isThunk t -> return (i,clos,[])
-      | otherwise -> return (i,clos,ptrs)
+      | otherwise -> return (i,clos,ptrs')
 
 getNodeH' :: HValue -> H (HNodeId, Closure, [HValue])
 getNodeH' a = do
   clos <- io (getClosure a)
   let itab = closITab clos
-      ptrs = closPtrs clos
+      ptrs' = closPtrs clos
   case itabType itab of
     t | isThunk t -> getNodeH' =<< io (defined a)
       | otherwise -> do
           (i, _) <- getId a
-          return (i,clos,ptrs)
+          return (i,clos,ptrs')
 
 ------------------------------------------------
 

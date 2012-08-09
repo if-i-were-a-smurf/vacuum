@@ -9,6 +9,7 @@
 -- 
 -- 
 -- 
+{-# LANGUAGE RecordWildCards #-}
 module GHC.Vacuum.Pretty (
    module GHC.Vacuum.Pretty
 ) where
@@ -60,12 +61,12 @@ newtype G e v = G {unG :: IntMap (v, IntMap e)}
   deriving(Eq,Ord,Read,Show)
 
 draw :: (Monad m) => Draw e v m a -> IntMap a -> m (G e v)
-draw (Draw mkV mkE succs) g = do
+draw Draw{..} g = do
   vs <- IM.fromList `liftM` forM (IM.toList g)
           (\(i,a) -> do v <- mkV i a
                         return (i,(v,succs a)))
   (G . IM.fromList) `liftM` forM (IM.toList vs)
-    (\(i,(v,ps)) -> do let us = fmap (vs IM.!) ps
+    (\(i,(v,ps)) -> do --let us = fmap (vs IM.!) ps
                        es <- IM.fromList `liftM` forM ps
                                (\p -> do e <- mkE v (fst (vs IM.! p))
                                          return (p,e))
@@ -82,7 +83,7 @@ printDraw = Draw
 split :: (a -> [Int]) -> IntMap a -> IntMap ([Int],[Int])
 split f = flip IM.foldWithKey mempty (\i a m ->
             let ps = f a
-            in foldl' (\m p -> IM.insertWith mappend p ([i],[]) m)
+            in foldl' (\m' p -> IM.insertWith mappend p ([i],[]) m')
                       (IM.insertWith mappend i ([],ps) m)
                       ps)
 

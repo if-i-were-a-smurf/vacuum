@@ -68,7 +68,7 @@ import System.IO.Unsafe
 import Control.Monad
 import Control.Applicative
 import Control.Exception
-import Prelude hiding(catch)
+import Prelude
 import Control.Concurrent
 
 import Foreign hiding (unsafePerformIO, void)

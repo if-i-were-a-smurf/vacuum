@@ -56,6 +56,8 @@ library
     exposed-modules:  GHC.Vacuum.ClosureType.V702
   if impl(ghc == 7.4.*)
     exposed-modules:  GHC.Vacuum.ClosureType.V704
+  if impl(ghc == 7.6.*)
+    exposed-modules:  GHC.Vacuum.ClosureType.V706
 
   hs-source-dirs:     src
   ghc-options:        -Wall -O2 -fwarn-tabs -funbox-strict-fields

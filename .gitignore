@@ -5,3 +5,4 @@
 /cabal-dev
 /pkgs/*/dist
 /pkgs/*/dist*
+.hub

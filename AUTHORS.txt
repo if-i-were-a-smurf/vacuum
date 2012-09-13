@@ -11,3 +11,4 @@ you've contributed, please tell me and I'll add you:
 
 * Conrad Parker
 * Ivan Lazar Miljenovic
+* John Lato

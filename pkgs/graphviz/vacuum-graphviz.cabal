@@ -15,8 +15,8 @@ cabal-version:       >=1.6
 library
   hs-source-dirs:    src
   build-depends:     base     > 3 && < 5,
-                     filepath > 1 && < 2,
-                     vacuum   == 2.0.0.0,
+                     filepath > 1,
+                     vacuum   >= 2.0,
                      graphviz == 2999.13.*
 
   exposed-modules:   GHC.Vacuum.GraphViz

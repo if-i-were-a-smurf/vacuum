@@ -1,5 +1,5 @@
 name:               vacuum
-version:            2.1.0.1
+version:            2.2.0.0
 synopsis:           Graph representation of the GHC heap
 description:
   Vacuum is a library for extracting graph representations of values

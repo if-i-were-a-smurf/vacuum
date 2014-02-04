@@ -24,6 +24,8 @@ module GHC.Vacuum.Internal (
 import Prelude hiding (mod)
 import Data.Char
 import Data.Word
+import Control.Applicative (Applicative(..))
+import Control.Monad (ap)
 import Control.Monad.Fix
 import Foreign
 
@@ -185,6 +187,9 @@ load = do addr <- advance
 newtype S s a = S {unS :: forall o. (a -> s -> IO o) -> s -> IO o}
 instance Functor (S s) where
   fmap f (S g) = S (\k -> g (k . f))
+instance Applicative (S s) where
+  pure  = return
+  (<*>) = ap
 instance Monad (S s) where
   return a = S (\k -> k a)
   S g >>= f = S (\k -> g (\a -> unS (f a) k))

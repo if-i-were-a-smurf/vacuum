@@ -1,4 +1,4 @@
-{-# LANGUAGE BangPatterns, UnboxedTuples, MagicHash #-}
+{-# LANGUAGE BangPatterns, CPP, UnboxedTuples, MagicHash #-}
 -- |
 -- Module      : GHC.Vacuum
 -- Copyright   : (c) Matt Morrow 2009, Austin Seipp 2011-2012
@@ -68,10 +68,19 @@ import System.IO.Unsafe
 import Control.Monad
 import Control.Applicative
 import Control.Exception
+#if MIN_VERSION_base(4,6,0)
+import Prelude
+#else
 import Prelude hiding(catch)
+#endif
 import Control.Concurrent
 
+#if MIN_VERSION_base(4,7,0)
+import Foreign hiding (void)
+#else
 import Foreign hiding (unsafePerformIO, void)
+#endif
+
 import GHC.Exts
 
 import System.Mem.StableName

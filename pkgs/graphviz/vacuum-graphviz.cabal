@@ -1,5 +1,5 @@
 name:                vacuum-graphviz
-version:             2.1.0.1
+version:             2.2.0.0
 synopsis:            A library for transforming vacuum graphs into GraphViz output
 description:
   A library for transforming @vacuum@ graphs into GraphViz output

@@ -49,13 +49,13 @@ import GHC.Vacuum
 
 ------------------------------------------------
 
--- | @vacuumToPng "foo" e@ renders a graph representation of the
+-- | @vacuumToPng \"foo\" e@ renders a graph representation of the
 -- expression @e@ (which can be any expression what-so-ever) to
 -- the file \"foo.png\" for later viewing.
 vacuumToPng :: FilePath -> a -> IO FilePath
 vacuumToPng fp a = graphToDotFile fp Png $ nameGraph (vacuum a)
 
--- | @vacuumToSvg "foo" e@ renders a graph representation of the
+-- | @vacuumToSvg \"foo\" e@ renders a graph representation of the
 -- expression @e@ (which can be any expression what-so-ever) to
 -- the file \"foo.svg\" for later viewing.
 vacuumToSvg :: FilePath -> a -> IO FilePath

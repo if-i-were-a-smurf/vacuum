@@ -24,7 +24,9 @@ module GHC.Vacuum.Internal (
 import Prelude hiding (mod)
 import Data.Char
 import Data.Word
+#if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative (Applicative(..))
+#endif
 import Control.Monad (ap)
 import Control.Monad.Fix
 import Foreign

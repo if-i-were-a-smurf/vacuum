@@ -31,7 +31,9 @@ import Prelude hiding (last)
 import Data.IORef
 import Control.Monad
 import Control.Concurrent
+#if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative
+#endif
 import System.IO.Unsafe (unsafeInterleaveIO)
 
 ------------------------------------------------

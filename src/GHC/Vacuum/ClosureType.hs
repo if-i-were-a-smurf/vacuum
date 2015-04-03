@@ -34,6 +34,8 @@ import GHC.Vacuum.ClosureType.V704 (ClosureType(..))
 import GHC.Vacuum.ClosureType.V706 (ClosureType(..))
 #elif __GLASGOW_HASKELL__ == 708
 import GHC.Vacuum.ClosureType.V708 (ClosureType(..))
+#elif __GLASGOW_HASKELL__ == 710
+import GHC.Vacuum.ClosureType.V710 (ClosureType(..))
 #else
 #error Unsupported GHC version in ClosureTypes.hs!
 #endif

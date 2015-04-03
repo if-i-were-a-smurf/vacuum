@@ -18,9 +18,11 @@ module GHC.Vacuum.Types (
 import GHC.Vacuum.ClosureType
 import GHC.Vacuum.Internal(HValue)
 
+#if !(MIN_VERSION_base(4,8,0))
 import Data.Word
-import Data.IntMap(IntMap)
 import Data.Monoid(Monoid(..))
+#endif
+import Data.IntMap(IntMap)
 import System.Mem.StableName
 
 ------------------------------------------------
@@ -83,10 +85,13 @@ data Closure = Closure
   {closPtrs :: [HValue]
   ,closLits :: [Word]
   ,closITab :: InfoTab}
-  deriving(Show)
 
--- So we can derive Show for Closure
-instance Show HValue where show _ = "(HValue)"
+instance Show Closure where
+    showsPrec d (Closure p l i) =
+        showParen (d > 10) ("Closure"++)
+                                . showsPrec d (map (const "(HValue)") p)
+                                . showsPrec d l
+                                . showsPrec d i
 
 -- A box for safe deposit of HValues
 data Box a = Box a

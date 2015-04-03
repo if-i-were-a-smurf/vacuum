@@ -17,7 +17,9 @@ import Control.Arrow (second)
 
 import Data.List
 import Data.IntMap (IntMap)
+#if !(MIN_VERSION_base(4,8,0))
 import Data.Monoid (Monoid(..))
+#endif
 import qualified Data.IntMap as IM
 
 import Control.Monad

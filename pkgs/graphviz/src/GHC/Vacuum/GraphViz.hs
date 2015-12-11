@@ -106,7 +106,7 @@ detailedVacuumToSvg :: FilePath -> a -> IO FilePath
 detailedVacuumToSvg fp a = runGraphviz (detailedVacuumToSvgDotGraph (vacuum a)) Svg fp
 
 detailedVacuumToSvgDotGraph :: IntMap HNode -> DotGraph Int 
-detailedVacuumToSvgDotGraph hm = DotGraph { strictGraph = True, directedGraph = True, graphID = Just (Str "vacuumed"), graphStatements = s }
+detailedVacuumToSvgDotGraph hm = DotGraph { strictGraph = False, directedGraph = True, graphID = Just (Str "vacuumed"), graphStatements = s }
  where
   s = DotStmts 
    { subGraphs = []

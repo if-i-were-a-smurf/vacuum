@@ -6,3 +6,5 @@
 /pkgs/*/dist
 /pkgs/*/dist*
 .hub
+*.stack-work
+*.swp

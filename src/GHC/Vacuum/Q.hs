@@ -1,4 +1,4 @@
-{-# LANGUAGE BangPatterns, PostfixOperators #-}
+{-# LANGUAGE BangPatterns, PostfixOperators, CPP #-}
 -- |
 -- Module      : GHC.Vacuum.Q
 -- Copyright   : (c) Matt Morrow 2009, Austin Seipp 2011-2012

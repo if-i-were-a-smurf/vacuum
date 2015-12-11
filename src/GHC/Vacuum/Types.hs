@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE TypeSynonymInstances, CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 -- |
 -- Module      : GHC.Vacuum.Types

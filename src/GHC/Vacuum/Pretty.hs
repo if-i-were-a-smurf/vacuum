@@ -9,7 +9,7 @@
 -- 
 -- 
 -- 
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE RecordWildCards, CPP #-}
 module GHC.Vacuum.Pretty (
    module GHC.Vacuum.Pretty
 ) where

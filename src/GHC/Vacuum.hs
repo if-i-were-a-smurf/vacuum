@@ -52,6 +52,9 @@ module GHC.Vacuum (
   ,nodePkg,nodeMod
   ,nodeName,itabName
   ,HValue
+  ,isThunk
+  ,isFun
+  ,isCon
 ) where
 
 import GHC.Vacuum.Q

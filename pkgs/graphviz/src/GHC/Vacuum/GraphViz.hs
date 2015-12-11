@@ -30,7 +30,7 @@ module GHC.Vacuum.GraphViz
        ( -- * Simple API
          vacuumToPng           -- :: FilePath -> a -> IO FilePath
        , vacuumToSvg           -- :: FilePath -> a -> IO FilePath
-         
+       , detailedVacuumToSvg   -- :: FilePath -> a -> IO FilePath 
          -- * Lower level API allowing more output control
        , graphToDotFile
        , graphToDot
@@ -41,8 +41,16 @@ module GHC.Vacuum.GraphViz
        ) where
 
 import Data.GraphViz hiding (graphToDot)
-import Data.GraphViz.Attributes.Complete( Attribute(RankDir, Splines, FontName)
-                                        , RankDir(FromLeft), EdgeType(SplineEdges))
+import Data.GraphViz.Attributes.Complete( Attribute(RankDir, Splines, FontName, Label, Shape, HeadPort, TailPort)
+                                        , RankDir(FromLeft), EdgeType(SplineEdges)
+                                        , Shape(Record), PortName(PN), PortPos(LabelledPort), Label(RecordLabel)
+                                        , RecordField(LabelledTarget))
+
+import Data.IntMap (IntMap)
+import qualified Data.IntMap as IM
+
+import Data.String
+
 import Control.Arrow(second)
 
 import GHC.Vacuum
@@ -90,3 +98,57 @@ gStyle = [ GraphAttrs [RankDir FromLeft, Splines SplineEdges, FontName "courier"
          ]
 
 ------------------------------------------------
+
+-- | Essentially doing the same as "vacuumToSvg"\n
+-- EXCEPT, this function does not automatically append the suffix \".svg\" to the filename\n
+
+detailedVacuumToSvg :: FilePath -> a -> IO FilePath
+detailedVacuumToSvg fp a = runGraphviz (detailedVacuumToSvgDotGraph (vacuum a)) Svg fp
+
+detailedVacuumToSvgDotGraph :: IntMap HNode -> DotGraph Int 
+detailedVacuumToSvgDotGraph hm = DotGraph { strictGraph = True, directedGraph = True, graphID = Just (Str "vacuumed"), graphStatements = s }
+ where
+  s = DotStmts 
+   { subGraphs = []
+   , attrStmts = [NodeAttrs { attrs = [Shape Record]}]
+   , nodeStmts = nodes
+   , edgeStmts = edges
+   }
+
+  nodes = map fnode (IM.toList hm)
+   where 
+    fnode :: (Int, HNode) -> DotNode Int
+    fnode (i,n) = DotNode 
+     { nodeID = i
+     , nodeAttributes = [Label (RecordLabel labels) ]
+     }
+     where
+      labels = 
+       LabelledTarget (PN "con") (fromString $ nodeName' n)
+        : [LabelledTarget (PN $ fromString $ show fi) ""  | fi <- [1..(let ni = nodeInfo n in itabPtrs ni + itabLits ni)]]
+
+  edges = concat $ map fedge (IM.toList hm)
+   where
+    fedge :: (Int, HNode) -> [DotEdge Int]
+    fedge (i', n) = zipWith f' [1..] (nodePtrs n)
+     where 
+      f' :: Int -> HNodeId -> DotEdge Int
+      f' fi t = DotEdge 
+       { fromNode = i'
+       , toNode = t
+       , edgeAttributes = 
+        [ HeadPort (LabelledPort (PN "con") Nothing)
+        , TailPort (LabelledPort (PN $ fromString $ show fi) Nothing)
+        ] 
+       }
+ 
+  nodeName' :: HNode -> String
+  nodeName' v
+    | isCon ct = nodeName v
+    | otherwise = show ct
+    where
+     ct = case nodeInfo v of
+      ConInfo {itabType = it} -> it
+      OtherInfo {itabType = it} -> it
+
+
